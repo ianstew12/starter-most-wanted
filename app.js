@@ -34,7 +34,7 @@ return family;
 function getSiblings(person, people){	//need to filter only if not an orphan
 	var siblings = [];
 	siblings = people.filter(function (element){		//four ways to be siblings here, including half siblings (which are siblings)
-		if (person.parents){
+		if (person.parents.length>=1){
 		return (person.parents[0]===element.parents[0]||person.parents[0]===element.parents[1]||
 			person.parents[1]===element.parents[0]||person.parents[1]===element.parents[1])&&(person.id!=element.id);
 	}
