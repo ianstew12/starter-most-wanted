@@ -41,7 +41,6 @@ switch(displayOption){
   break;
   case "descendants":
 	{var descendants= getDescendants(person, people);//default third parameter descendants = []
-    alert("you serched descendants");
     alert("descendants: " + showPeopleNames(descendants))};
 
 
@@ -93,34 +92,22 @@ function promptFor(question, valid){
 function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
 }
-
-// helper function to pass in as default promptFor validation
 function chars(input){
   return true; // default validation only
 }
-/*
-function eyeColorOptions(people){     
-  var eyeColorOptions = [];
-  for (i=0; i<people.length; i++){
-    eyeColorOptions.push(people[i].eyeColor);
-  }
-  return eyeColorOptions; 
-}
-*/
 function doCheckHeight(){ 
   var includeHeight = prompt("Do you wish to filter by height?").toLowerCase();                  
   if (includeHeight === "yes") {return true;}
   else if (includeHeight === "no") {return false}    
     else {return doCheckHeight()};
 } 
-
 function askHeight(){                             
   if (doCheckHeight()){
     var heightToFilter= parseInt(prompt("enter height in inches"));
     if (isNaN(heightToFilter)|| heightToFilter <0 || heightToFilter > 90) {
       alert('that was not a valid height');
       return askHeight();
-      var heightToFilter= prompt("enter height in inches");                     //HEIGHT FILTER IS BROKEN 
+      var heightToFilter= prompt("enter height in inches");                    
     }
     return heightToFilter;
   }
@@ -213,7 +200,7 @@ function doCheckAge(){
 }
 function askAge(){
   if (doCheckAge()){
-    ageToFilter = parseInt(prompt('enter age'));
+    var ageToFilter = parseInt(prompt('enter age'));
     if (isNaN(ageToFilter)){
       alert("not a valid age");
       return askAge();     
@@ -224,11 +211,48 @@ function askAge(){
     return false;
   }
 }  
-function dobToAge(dob){ //dob is a string with the last 4 characters being YYYY digits
-  var birthyear = Number(dob.substr(dob.length-4), dob.length+1);
-  var age = (2017 - birthyear);     //ignoring months (rounding ages)
+function formatDob(dob){            
+var dobUnits = dob.split("/");     
+var month = dobUnits[0];
+  if (parseInt(month)<10){
+    month="0"+month;
+  }
+var date = dobUnits[1];
+  if (parseInt(date)<10){
+    date="0"+date;
+  }
+var year = dobUnits[2];
+var dobInIsoFormat = (year)+"-"+(month)+"-"+(date);
+return dobInIsoFormat;
+}
+
+function getTodayDate(){
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+if(dd<10) {
+    dd='0'+dd
+} 
+if(mm<10) {
+    mm='0'+mm
+} 
+today = yyyy+"-"+mm+"-"+dd;
+return today;
+}
+
+function dobToAge(dob){
+  var formattedAge= formatDob(dob);
+  var currentDate = getTodayDate();
+  var ageInMS = Date.parse(currentDate) - Date.parse(formattedAge);
+  var age = parseInt(ageInMS) /(1000 * 60*60*24*365.25); 
+      age=Math.floor(age);
   return age;
 }
+
+
+
+
 function filterByAge(people){
   var ageToFilter = askAge();
   if (ageToFilter){
