@@ -1,5 +1,5 @@
 function formatDob(dob){            //      mm/dd/yyyy   want to get yyyy-mm-dd
-var dobUnits = dob.split("/");     ["mm","dd","yyyy"]
+var dobUnits = dob.split("/");     //["mm","dd","yyyy"]
 var month = dobUnits[0];
   if (parseInt(month)<10){
     month="0"+month;
