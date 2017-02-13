@@ -1,15 +1,10 @@
-/*
-  Build all of your functions for displaying and gathering information below (GUI).
-  */
-
-// app is the function called to start the entire application
 "use strict";
 function app(people){   
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo);
   var person = "";             //can initialize as empty string b/c JS is dynamically typed
   switch(searchType){
     case 'yes':    
-      person = searchByName(people);          //add return statement  reduceToPerson
+      person = searchByName(people);        
       mainMenu(person, people);    
       break;
       case 'no':
@@ -17,18 +12,18 @@ function app(people){
       mainMenu(person, people);
       break;                                    
       default:
-      app(people); // restart (recursive) 
+      app(people);  
       break;
     }                     
 }           
 
-// Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 if(!person){
   alert("Could not find that individual.");         
   return app(people); 
 }
-var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+var displayOption = prompt("Found " + person.firstName + " " + person.lastName +
+ " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
 switch(displayOption){
   case "info":
@@ -314,7 +309,8 @@ function filterTraits(people){
 function reduceToPerson(resultsFromFilter){
   if (resultsFromFilter.length>1){
     alert("Multiple results fit your criteria. You will next be shown a list of matching names, from which you will choose one to proceed");
-    var index = promptFor("enter the index number next to the name of the person whose information you would like \n" + showPeopleNamesWithIndex(resultsFromFilter), chars);  
+    var index = promptFor("enter the index number next to the name of the person whose information you would like \n"
+     + showPeopleNamesWithIndex(resultsFromFilter), chars);  
     return resultsFromFilter[parseInt(index)];   //TODO:newline needs fixing
   }
 else {return resultsFromFilter[0];}   //instead of returning the whole object, just returning the first element in the object

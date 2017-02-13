@@ -1,6 +1,5 @@
-function formatDob(dob){            //dob comes as mm/dd/yyyy    ISO 8601 FORMAT:  YYYY-MM-DD 
-var dobUnits = dob.split("/");    //dob is a string! formatDob("1-1-1900") not formatDob(1-1-1900)
-//dobUnits is an array of strings ["mm", "dd", "yyyy"] but dobunits[0][0] and dobUnits[1][0] may not exist (single digit)  
+function formatDob(dob){            //      mm/dd/yyyy   want to get yyyy-mm-dd
+var dobUnits = dob.split("/");     ["mm","dd","yyyy"]
 var month = dobUnits[0];
   if (parseInt(month)<10){
     month="0"+month;
@@ -10,7 +9,7 @@ var date = dobUnits[1];
     date="0"+date;
   }
 var year = dobUnits[2];
-var dobInIsoFormat = (year)+"-"+(month)+"-"+(date);
+var dobInIsoFormat = (year)+"-"+(month)+"-"+(date); //yyyy-mm-dd
 return dobInIsoFormat;
 }
 
@@ -37,4 +36,3 @@ function dobToAge(dob){
       age=Math.floor(age);
   return age;
 }
-
